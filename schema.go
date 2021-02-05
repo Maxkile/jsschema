@@ -287,7 +287,7 @@ func (s *Schema) Scope() string {
 	}
 	if s.ID != "" || s.parent == nil {
 		if pdebug.Enabled {
-			pdebug.Printf("Returning id '%s'", s.ID)
+			pdebug.Printf("Returning $id '%s'", s.ID)
 		}
 		return s.ID
 	}

@@ -2,6 +2,7 @@ package schema
 
 import (
 	"encoding/json"
+	"fmt"
 	"regexp"
 	"strconv"
 
@@ -70,6 +71,16 @@ func extractString(s *string, m map[string]interface{}, name string) error {
 	}
 
 	*s = val
+	return nil
+}
+
+func extractBytes(s *[]byte, m map[string]interface{}, name string) error {
+	v, ok := m[name]
+	if !ok {
+		return nil
+	}
+
+	*s = ([]byte)(fmt.Sprintf("%v", v))
 	return nil
 }
 
@@ -479,7 +490,7 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 
 	var err error
 
-	if err = extractString(&s.ID, m, "id"); err != nil {
+	if err = extractString(&s.ID, m, "$id"); err != nil {
 		return errors.Wrapf(err, "failed to extract 'id'")
 	}
 
@@ -489,6 +500,10 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 
 	if err = extractString(&s.Description, m, "description"); err != nil {
 		return errors.Wrap(err, "failed to extract 'description'")
+	}
+
+	if err = extractBytes(&s.Examples, m, "examples"); err != nil {
+		return errors.Wrapf(err, "failed to extract 'examples'")
 	}
 
 	if err = extractStringList(&s.Required, m, "required"); err != nil {
@@ -650,7 +665,7 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 	s.Extras = make(map[string]interface{})
 	for k, v := range m {
 		switch k {
-		case "id", "title", "description", "required", "$schema", "$ref", "format", "enum", "default", "type", "definitions", "items", "pattern", "minLength", "maxLength", "minItems", "maxItems", "uniqueItems", "maxProperties", "minProperties", "minimum", "exclusiveMinimum", "maximum", "exclusiveMaximum", "multipleOf", "properties", "dependencies", "additionalItems", "additionalProperties", "patternProperties", "allOf", "anyOf", "oneOf", "not":
+		case "id", "title", "description", "examples", "required", "$schema", "$ref", "format", "enum", "default", "type", "definitions", "items", "pattern", "minLength", "maxLength", "minItems", "maxItems", "uniqueItems", "maxProperties", "minProperties", "minimum", "exclusiveMinimum", "maximum", "exclusiveMaximum", "multipleOf", "properties", "dependencies", "additionalItems", "additionalProperties", "patternProperties", "allOf", "anyOf", "oneOf", "not":
 			continue
 		}
 		if pdebug.Enabled {
@@ -673,6 +688,12 @@ func place(m map[string]interface{}, name string, v interface{}) {
 func placeString(m map[string]interface{}, name, s string) {
 	if s != "" {
 		place(m, name, s)
+	}
+}
+
+func placeBytes(m map[string]interface{}, name string, bytes []byte) {
+	if len(bytes) > 0 {
+		place(m, name, bytes)
 	}
 }
 
@@ -738,11 +759,12 @@ func canBeType(s *Schema, primType PrimitiveType) bool {
 func (s *Schema) MarshalJSON() ([]byte, error) {
 	m := make(map[string]interface{})
 
-	placeString(m, "id", s.ID)
+	placeString(m, "$id", s.ID)
 	placeString(m, "title", s.Title)
 	placeString(m, "description", s.Description)
 	placeString(m, "$schema", s.SchemaRef)
 	placeString(m, "$ref", s.Reference)
+	placeBytes(m, "examples", s.Examples)
 	placeStringList(m, "required", s.Required)
 	placeList(m, "enum", s.Enum)
 	switch len(s.Type) {

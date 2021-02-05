@@ -29,6 +29,31 @@ func readSchema(f string) (*schema.Schema, error) {
 	return schema.Read(in)
 }
 
+func TestExamples(t *testing.T) {
+	const src = `{
+  "extra1": "foo",
+  "extra2": ["bar", "baz"],
+  "examples": [
+		{
+			"property": [
+              {
+                "name": "name",
+                "url": "url"
+              }
+            ]
+		}
+	]
+}`
+	s, err := schema.Read(strings.NewReader(src))
+	if !assert.NoError(t, err, "schema.Read should succeed") {
+		if !assert.Equal(t, "[map[property:[map[name:name url:url]]]", (string)(s.Examples)) {
+			return
+		}
+		return
+	}
+}
+
+
 func TestExtras(t *testing.T) {
 	const src = `{
   "extra1": "foo",
