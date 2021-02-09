@@ -499,7 +499,7 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 	var err error
 
 	if err = extractString(&s.ID, m, "$id"); err != nil {
-		return errors.Wrapf(err, "failed to extract 'id'")
+		return errors.Wrapf(err, "failed to extract '$id'")
 	}
 
 	if err = extractString(&s.Title, m, "title"); err != nil {
@@ -508,6 +508,10 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 
 	if err = extractString(&s.Description, m, "description"); err != nil {
 		return errors.Wrap(err, "failed to extract 'description'")
+	}
+
+	if err = extractString(&s.Comment, m, "$comment"); err != nil {
+		return errors.Wrap(err, "failed to extract '$comment'")
 	}
 
 	if err = extractExamples(&s.Examples, m, "examples"); err != nil {
@@ -552,6 +556,10 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 
 	if err = extractRegexp(&s.Pattern, m, "pattern"); err != nil {
 		return errors.Wrap(err, "failed to extract 'patterns'")
+	}
+
+	if err = extractInterface(&s.Const, m, "const"); err != nil {
+		return errors.Wrap(err, "failed to extract 'const'")
 	}
 
 	if extractInt(&s.MinLength, m, "minLength"); err != nil {
@@ -764,6 +772,7 @@ func (s *Schema) MarshalJSON() ([]byte, error) {
 	placeString(m, "$id", s.ID)
 	placeString(m, "title", s.Title)
 	placeString(m, "description", s.Description)
+	placeString(m, "comment", s.Comment)
 	placeString(m, "$schema", s.SchemaRef)
 	placeString(m, "$ref", s.Reference)
 	placeStringList(m, "examples", s.Examples)
@@ -799,6 +808,7 @@ func (s *Schema) MarshalJSON() ([]byte, error) {
 	placeInteger(m, "minLength", s.MinLength)
 	placeInteger(m, "maxItems", s.MaxItems)
 	placeInteger(m, "minItems", s.MinItems)
+	place(m, "const", s.Const)
 	placeInteger(m, "maxProperties", s.MaxProperties)
 	placeInteger(m, "minProperties", s.MinProperties)
 	if s.UniqueItems.Initialized {

@@ -92,13 +92,13 @@ type Schema struct {
 	Title           string             `json:"title,omitempty"`
 	Examples        []string           `json:"examples,omitempty"`
 	Description     string             `json:"description,omitempty"`
+	Comment         string             `json:"comment,omitempty"`
 	Default         interface{}        `json:"default,omitempty"`
 	Type            PrimitiveTypes     `json:"type,omitempty"`
 	SchemaRef       string             `json:"$schema,omitempty"`
 	Definitions     map[string]*Schema `json:"definitions,omitempty"`
 	Reference       string             `json:"$ref,omitempty"`
 	Format          Format             `json:"format,omitempty"`
-
 	// NumericValidations
 	MultipleOf       Number `json:"multipleOf,omitempty"`
 	Minimum          Number `json:"minimum,omitempty"`
@@ -110,6 +110,7 @@ type Schema struct {
 	MaxLength Integer        `json:"maxLength,omitempty"`
 	MinLength Integer        `json:"minLength,omitempty"`
 	Pattern   *regexp.Regexp `json:"pattern,omitempty"`
+	Const     interface{}    `json:"const,omitempty"`
 
 	// ArrayValidations
 	AdditionalItems *AdditionalItems
