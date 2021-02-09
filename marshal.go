@@ -2,7 +2,6 @@ package schema
 
 import (
 	"encoding/json"
-	"fmt"
 	"regexp"
 	"strconv"
 
@@ -74,13 +73,17 @@ func extractString(s *string, m map[string]interface{}, name string) error {
 	return nil
 }
 
-func extractBytes(s *[]byte, m map[string]interface{}, name string) error {
+func extractExamples(s *string, m map[string]interface{}, name string) error {
 	v, ok := m[name]
 	if !ok {
 		return nil
 	}
+	out, err := json.MarshalIndent(v, "", "\t")
+	if err != nil {
+		return err
+	}
 
-	*s = ([]byte)(fmt.Sprintf("%v", v))
+	*s = string(out)
 	return nil
 }
 
@@ -502,7 +505,7 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 		return errors.Wrap(err, "failed to extract 'description'")
 	}
 
-	if err = extractBytes(&s.Examples, m, "examples"); err != nil {
+	if err = extractExamples(&s.Examples, m, "examples"); err != nil {
 		return errors.Wrapf(err, "failed to extract 'examples'")
 	}
 
@@ -691,12 +694,6 @@ func placeString(m map[string]interface{}, name, s string) {
 	}
 }
 
-func placeBytes(m map[string]interface{}, name string, bytes []byte) {
-	if len(bytes) > 0 {
-		place(m, name, bytes)
-	}
-}
-
 func placeList(m map[string]interface{}, name string, l []interface{}) {
 	if len(l) > 0 {
 		place(m, name, l)
@@ -764,7 +761,7 @@ func (s *Schema) MarshalJSON() ([]byte, error) {
 	placeString(m, "description", s.Description)
 	placeString(m, "$schema", s.SchemaRef)
 	placeString(m, "$ref", s.Reference)
-	placeBytes(m, "examples", s.Examples)
+	placeString(m, "examples", s.Examples)
 	placeStringList(m, "required", s.Required)
 	placeList(m, "enum", s.Enum)
 	switch len(s.Type) {

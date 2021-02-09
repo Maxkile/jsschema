@@ -89,7 +89,7 @@ type Schema struct {
 	resolver        *jsref.Resolver
 	ID              string             `json:"$id,omitempty"`
 	Title           string             `json:"title,omitempty"`
-	Examples	    []byte			   `json:"examples,omitempty"`
+	Examples	    string			   `json:"examples,omitempty"`
 	Description     string             `json:"description,omitempty"`
 	Default         interface{}        `json:"default,omitempty"`
 	Type            PrimitiveTypes     `json:"type,omitempty"`
