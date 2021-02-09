@@ -3,11 +3,10 @@
 package schema_test
 
 import (
+	schema "github.com/Maxkile/jsschema"
 	"strings"
 	"testing"
 
-	schema "github.com/lestrrat-go/jsschema"
-	"github.com/lestrrat-go/jsschema/validator"
 	"github.com/xeipuuv/gojsonschema"
 )
 
@@ -175,14 +174,5 @@ func BenchmarkParse(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		s, _ := schema.Read(r)
 		_ = s
-	}
-}
-
-func BenchmarkParseAndMakeValidator(b *testing.B) {
-	r := strings.NewReader(schemaJSON)
-	for i := 0; i < b.N; i++ {
-		s, _ := schema.Read(r)
-		v := validator.New(s)
-		v.Compile() // force compiling for comparison
 	}
 }
