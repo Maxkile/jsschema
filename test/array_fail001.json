@@ -1,3 +1,5 @@
 {
-  "payload": {"Not": "an array"}
+  "payload": {
+    "Not": "an array"
+  }
 }

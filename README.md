@@ -36,12 +36,11 @@ func Example() {
 
 # DESCRIPTION
 
-This packages parses a JSON Schema file, and allows you to inspect, modify
-the schema, but does nothing more.
+This packages parses a JSON Schema file, and allows you to inspect, modify the schema, but does nothing more.
 
-In the same lines, this package does not really care about loading external
-schemas from various locations (it's just easier to just gather all the schemas
-in your local system). It *is* possible to do this via [go-jsref](https://github.com/lestrrat-go/jsref)
+In the same lines, this package does not really care about loading external schemas from various locations (it's just
+easier to just gather all the schemas in your local system). It *is* possible to do this
+via [go-jsref](https://github.com/lestrrat-go/jsref)
 if you really want to do it.
 
 # BENCHMARKS

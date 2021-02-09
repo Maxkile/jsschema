@@ -1,3 +1,9 @@
 {
-  "payload": [1600, "Pennsylvania", "Avenue", "NW", "Washington"]
+  "payload": [
+    1600,
+    "Pennsylvania",
+    "Avenue",
+    "NW",
+    "Washington"
+  ]
 }

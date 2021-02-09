@@ -3,8 +3,12 @@
   "properties": {
     "payload": {
       "patternProperties": {
-        "^S_": { "type": "string" },
-        "^I_": { "type": "integer" }
+        "^S_": {
+          "type": "string"
+        },
+        "^I_": {
+          "type": "integer"
+        }
       },
       "additionalProperties": false
     }

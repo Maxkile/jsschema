@@ -73,17 +73,22 @@ func extractString(s *string, m map[string]interface{}, name string) error {
 	return nil
 }
 
-func extractExamples(s *string, m map[string]interface{}, name string) error {
+func extractExamples(s *[]string, m map[string]interface{}, name string) error {
 	v, ok := m[name]
 	if !ok {
 		return nil
 	}
-	out, err := json.MarshalIndent(v, "", "\t")
-	if err != nil {
-		return err
+
+	examples := v.([]interface{})
+	*s = make([]string, len(examples))
+	for i, _ := range examples {
+		out, err := json.MarshalIndent(examples[i], "", " ")
+		if err != nil {
+			return err
+		}
+		(*s)[i] = string(out)
 	}
 
-	*s = string(out)
 	return nil
 }
 
@@ -761,7 +766,7 @@ func (s *Schema) MarshalJSON() ([]byte, error) {
 	placeString(m, "description", s.Description)
 	placeString(m, "$schema", s.SchemaRef)
 	placeString(m, "$ref", s.Reference)
-	placeString(m, "examples", s.Examples)
+	placeStringList(m, "examples", s.Examples)
 	placeStringList(m, "required", s.Required)
 	placeList(m, "enum", s.Enum)
 	switch len(s.Type) {

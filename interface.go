@@ -20,6 +20,7 @@ const (
 // ErrExpectedArrayOfString is returned when we encounter
 // something other than array of strings
 var ErrExpectedArrayOfString = errors.New("invalid value: expected array of string")
+
 // ErrInvalidStringArray is the same as ErrExpectedArrayOfString.
 // This is here only for backwards compatibility
 var ErrInvalidStringArray = ErrExpectedArrayOfString
@@ -89,7 +90,7 @@ type Schema struct {
 	resolver        *jsref.Resolver
 	ID              string             `json:"$id,omitempty"`
 	Title           string             `json:"title,omitempty"`
-	Examples	    string			   `json:"examples,omitempty"`
+	Examples        []string           `json:"examples,omitempty"`
 	Description     string             `json:"description,omitempty"`
 	Default         interface{}        `json:"default,omitempty"`
 	Type            PrimitiveTypes     `json:"type,omitempty"`

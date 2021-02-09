@@ -1,3 +1,5 @@
 {
-  "payload": { "Hello": "World" }
+  "payload": {
+    "Hello": "World"
+  }
 }

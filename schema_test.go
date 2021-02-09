@@ -46,17 +46,16 @@ func TestExamples(t *testing.T) {
 }`
 	s, err := schema.Read(strings.NewReader(src))
 	if assert.NoError(t, err, "schema.Read should succeed") {
-		expected :=
-`[
-	{
-		"property": [
-			{
-				"name": "name",
-				"url": "url"
-			}
-		]
-	}
-]`
+		expected := []string{
+			`{
+ "property": [
+  {
+   "name": "name",
+   "url": "url"
+  }
+ ]
+}`,
+		}
 		if !assert.Equal(t, expected, s.Examples) {
 			return
 		}

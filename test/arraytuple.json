@@ -12,11 +12,20 @@
         },
         {
           "type": "string",
-          "enum": ["Street", "Avenue", "Boulevard"]
+          "enum": [
+            "Street",
+            "Avenue",
+            "Boulevard"
+          ]
         },
         {
           "type": "string",
-          "enum": ["NW", "NE", "SW", "SE"]
+          "enum": [
+            "NW",
+            "NE",
+            "SW",
+            "SE"
+          ]
         }
       ]
     }
