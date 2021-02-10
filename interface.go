@@ -92,7 +92,7 @@ type Schema struct {
 	Title           string             `json:"title,omitempty"`
 	Examples        []string           `json:"examples,omitempty"`
 	Description     string             `json:"description,omitempty"`
-	Comment         string             `json:"comment,omitempty"`
+	Comment         string             `json:"$comment,omitempty"`
 	Default         interface{}        `json:"default,omitempty"`
 	Type            PrimitiveTypes     `json:"type,omitempty"`
 	SchemaRef       string             `json:"$schema,omitempty"`
