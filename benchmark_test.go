@@ -56,22 +56,19 @@ const schemaJSON = `{
     "default": {},
     "multipleOf": {
       "type": "number",
-      "minimum": 0,
-      "exclusiveMinimum": true
+      "exclusiveMinimum": 0
     },
     "maximum": {
       "type": "number"
     },
     "exclusiveMaximum": {
-      "type": "boolean",
-      "default": false
+      "type": "number"
     },
     "minimum": {
       "type": "number"
     },
     "exclusiveMinimum": {
-      "type": "boolean",
-      "default": false
+      "type": "number"
     },
     "maxLength": { "$ref": "#/definitions/positiveInteger" },
     "minLength": { "$ref": "#/definitions/positiveIntegerDefault0" },

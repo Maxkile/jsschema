@@ -50,7 +50,7 @@ func buildJSSchema() {
     "multipleOf": {
       "type": "number",
       "minimum": 0,
-      "exclusiveMinimum": true
+      "exclusiveMinimum": 0
     },
     "maximum": {
       "type": "number"

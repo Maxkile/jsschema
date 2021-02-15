@@ -681,7 +681,7 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 	s.Extras = make(map[string]interface{})
 	for k, v := range m {
 		switch k {
-		case "id", "title", "description", "examples", "required", "$schema", "$ref", "format", "enum", "default", "type", "definitions", "items", "pattern", "minLength", "maxLength", "minItems", "maxItems", "uniqueItems", "maxProperties", "minProperties", "minimum", "exclusiveMinimum", "maximum", "exclusiveMaximum", "multipleOf", "properties", "dependencies", "additionalItems", "additionalProperties", "patternProperties", "allOf", "anyOf", "oneOf", "not":
+		case "$id", "title", "description", "examples", "required", "$schema", "$ref", "format", "enum", "default", "type", "definitions", "items", "pattern", "minLength", "maxLength", "minItems", "maxItems", "uniqueItems", "maxProperties", "minProperties", "minimum", "exclusiveMinimum", "maximum", "exclusiveMaximum", "multipleOf", "properties", "dependencies", "additionalItems", "additionalProperties", "patternProperties", "allOf", "anyOf", "oneOf", "not":
 			continue
 		}
 		if pdebug.Enabled {
