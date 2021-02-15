@@ -594,7 +594,7 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 		return errors.Wrap(err, "failed to extract 'minimum'")
 	}
 
-	if err = extractBool(&s.ExclusiveMinimum, m, "exclusiveMinimum", false); err != nil {
+	if err = extractNumber(&s.ExclusiveMinimum, m, "exclusiveMinimum"); err != nil {
 		return errors.Wrap(err, "failed to extract 'exclusiveMinimum'")
 	}
 
@@ -602,7 +602,7 @@ func (s *Schema) Extract(m map[string]interface{}) error {
 		return errors.Wrap(err, "failed to extract 'maximum'")
 	}
 
-	if err = extractBool(&s.ExclusiveMaximum, m, "exclusiveMaximum", false); err != nil {
+	if err = extractNumber(&s.ExclusiveMaximum, m, "exclusiveMaximum"); err != nil {
 		return errors.Wrap(err, "failed to extract 'exclusiveMaximum'")
 	}
 
@@ -842,13 +842,17 @@ func (s *Schema) MarshalJSON() ([]byte, error) {
 	}
 
 	placeString(m, "format", string(s.Format))
-	placeNumber(m, "minimum", s.Minimum)
-	if s.ExclusiveMinimum.Initialized {
-		placeBool(m, "exclusiveMinimum", s.ExclusiveMinimum)
+	if s.Minimum.Initialized {
+		placeNumber(m, "minimum", s.Minimum)
 	}
-	placeNumber(m, "maximum", s.Maximum)
+	if s.Maximum.Initialized {
+		placeNumber(m, "maximum", s.Maximum)
+	}
+	if s.ExclusiveMinimum.Initialized {
+		placeNumber(m, "exclusiveMinimum", s.ExclusiveMinimum)
+	}
 	if s.ExclusiveMaximum.Initialized {
-		placeBool(m, "exclusiveMaximum", s.ExclusiveMaximum)
+		placeNumber(m, "exclusiveMaximum", s.ExclusiveMaximum)
 	}
 
 	if ap := s.AdditionalProperties; ap != nil {
